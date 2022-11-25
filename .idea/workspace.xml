@@ -59,7 +59,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="npm.dev">
+  <component name="RunManager" selected="npm.publish">
     <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -80,8 +80,19 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="publish" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="publish" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.publish" />
         <item itemvalue="npm.build" />
         <item itemvalue="npm.dev" />
       </list>
@@ -97,7 +108,7 @@
       <updated>1669188278179</updated>
       <workItem from="1669188280317" duration="15983000" />
       <workItem from="1669279964452" duration="29000" />
-      <workItem from="1669279999649" duration="183000" />
+      <workItem from="1669279999649" duration="1075000" />
     </task>
     <servers />
   </component>
