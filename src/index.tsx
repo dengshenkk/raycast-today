@@ -92,7 +92,7 @@ export default function Command() {
         showToast(Toast.Style.Success, "背景图", "设置成功!");
         setTimeout(() => {
           showHUD("桌面已更新");
-        }, 1500)
+        }, 1500);
       })
       .catch(() => {
         showToast(Toast.Style.Failure, "背景图", "设置失败!");
@@ -101,7 +101,14 @@ export default function Command() {
   }
 
   return (
-    <Grid isLoading={isLoading} columns={1} inset={Grid.Inset.Zero} fit={Grid.Fit.Fill} aspectRatio="16/9" searchBarPlaceholder="按回车进行设置">
+    <Grid
+      isLoading={isLoading}
+      columns={1}
+      inset={Grid.Inset.Zero}
+      fit={Grid.Fit.Fill}
+      aspectRatio="16/9"
+      searchBarPlaceholder="按回车进行设置"
+    >
       <Grid.Item
         key={img}
         content={img}
