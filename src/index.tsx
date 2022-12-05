@@ -19,7 +19,7 @@ async function executeAppleScript(imagePath: string) {
 }
 
 export default function Command() {
-  const [img, setImg] = useState("");
+  const [img, setImg] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   async function init() {
@@ -50,10 +50,12 @@ export default function Command() {
         },
       })
       .then((res) => {
-        const url = res.data.MediaContents[0].ImageContent.Image.Url;
-        const value = host + url;
+        const url = res.data.MediaContents?.map((item: any) => {
+          const url = item.ImageContent.Image.Url
+          return url.startsWith('http')? url: host + url
+        })
         setIsLoading(false);
-        setImg(value);
+        setImg(url);
       });
   }
 
@@ -73,7 +75,7 @@ export default function Command() {
       responseType: "arraybuffer",
     });
     const fileTypeResult = await fileType.fileTypeFromBuffer(response.data);
-    const imagePath = path.resolve(filepath, `${dayjs().format("YYYY-MM-DD")}.${fileTypeResult?.ext}`);
+    const imagePath = path.resolve(filepath, `${dayjs().format("YYYY-MM-DD-HH_mm_ss")}.${fileTypeResult?.ext}`);
     return new Promise((resolve, reject) => {
       try {
         fs.writeFileSync(imagePath, response.data);
@@ -86,7 +88,6 @@ export default function Command() {
 
   async function handleSet(item: string) {
     const image: string = await downloadFile(item);
-    console.log("[image]: ", image);
     await executeAppleScript(image)
       .then(() => {
         showToast(Toast.Style.Success, "背景图", "设置成功!");
@@ -109,15 +110,17 @@ export default function Command() {
       aspectRatio="16/9"
       searchBarPlaceholder="按回车进行设置"
     >
-      <Grid.Item
-        key={img}
-        content={img}
-        actions={
-          <ActionPanel title="set background">
-            <Action title="" onAction={() => handleSet(img)}></Action>
-          </ActionPanel>
-        }
-      />
+      {
+        img.map(item => <Grid.Item
+            key={item}
+            content={item}
+            actions={
+              <ActionPanel title="set background">
+                <Action title="" onAction={() => handleSet(item)}></Action>
+              </ActionPanel>
+            }
+        />)
+      }
     </Grid>
   );
 }
